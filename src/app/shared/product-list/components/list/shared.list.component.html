@@ -1,0 +1,41 @@
+<div *ngIf="buttonTitle === 'Remove from Cart' && productsArray.length ==0">
+    Your cart is Empty
+</div>
+<div id="items-grid">
+    @for(product of productsArray; track product.id){
+        <div class="item">
+                <div>
+                    <div id="image-div">
+                        <img id="image" src="{{product.url}}" alt="Cannot Load image">
+                    </div>
+                </div>
+                <div>
+                    <div class="property">
+                        <h5 id="productName">Name :</h5>
+                        <p>{{product.name}}</p>
+                    </div>
+                    <div class="property">
+                        <h5 id="productCategory">Category :</h5>
+                        <p>{{product.category}}</p>
+                    </div>
+                    <div class="property">
+                        <h5 id="productPrice">Price :</h5>
+                        <p>{{product.price}}</p>
+                    </div>
+                    <div class="property">
+                        <h5 id="ProductRating">Rating :</h5>
+                        <p>{{product.rating}}</p>
+                    </div>
+                    <ng-container *ngIf="buttonTitle === 'Remove from Cart'">
+                        <div class="property">
+                            <h5 id="ProductQuantity">Quantity :</h5>
+                            <p>{{product.quantity}}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div>
+                    <button (click)="addToCart(product.id)" id="addToCartButton">{{buttonTitle}}</button>
+                </div>
+        </div>
+    }
+    </div>

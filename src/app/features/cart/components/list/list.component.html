@@ -1,0 +1,5 @@
+<app-header id="base-container"></app-header>
+
+<app-shared-list [productsArray]="user.userCart" [buttonTitle]="'Remove from Cart'" (buttonClickedEvent)="removeFromCart($event)"></app-shared-list>
+<h4>Total Amount = {{user.bill}}</h4>
+<button (click)="confirmOrder()">Confirm Order</button>
