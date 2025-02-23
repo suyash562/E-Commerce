@@ -1,13 +1,38 @@
-<div id="title">
-    <h3>My Store</h3>
-</div>
-<div id="options-container">
-    <div>
+<p-menubar [model]="items">
+    <ng-template #start>
+        <p-button (click)="displayDrawer()" icon="pi pi-bars" />
+        <h2>My Store</h2>
+        <!-- <i class="pi pi-home" style="font-size: 1rem"></i> -->
+    </ng-template>
+    <p-menubar [model]="items" />
+    <ng-template #end>
+        <div class="flex items-center gap-2">
+            <p-autocomplete placeholder="search" [suggestions]="matchedProductNames" [formControl]="selectedProductName" (completeMethod)="getOptions($event)" />
+            <ng-container *ngIf="currentUserEmail;else loginTemplate">
+                <p-menu #menu [model]="dropDownOptions" [popup]="true" />
+                <p-button severity="secondary" (click)="menu.toggle($event)" icon="pi pi-user"/>
+                <!-- <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" /> -->
+            </ng-container>
+        </div>
+        <ng-template #loginTemplate>
+            <p-button severity="secondary" label="Login" icon="pi pi-sign-in" routerLink="/user/login"></p-button>
+        </ng-template>
+    </ng-template>
+</p-menubar>
+
+
+
+
+
+
+    <!-- <div>
         <a routerLink="/">Home</a>
     </div>
-    <div>
-        <a routerLink="/products/add-product">Add Products</a>
-    </div>
+    <ng-container *ngIf="currentUserEmail === 'admin@gmail.com'">
+        <div>
+            <a routerLink="/products/add-product">Add Products</a>
+        </div>
+    </ng-container>
     <div>
         <a routerLink="../../cart/list">My Cart</a>
     </div>
@@ -15,32 +40,12 @@
         <a routerLink="/orders/list">Manage Orders</a>
     </div>
     <div>
+        <p-autocomplete placeholder="search" [suggestions]="matchedProductNames" [formControl]="selectedProductName" (completeMethod)="getOptions($event)" />
+    </div>  
+    <div>
         <a routerLink="/user/register">Register</a>
     </div>
     <div>
         <button (click)="logout()">Logout</button>
-    </div>
-    <!-- <div>
-         <select name="categoryFilter" id="categoryFilter">
-            <option selected value="category">Category</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Appliances">Appliances</option>
-            <option value="Mobile">Mobile</option>
-         </select>
-    </div>
-    <div>
-         <select name="ratingFilter" id="ratingFilter">
-            <option selected value="rating">Rating</option>
-            <option value="high">High</option>
-            <option value="low">Low</option>
-         </select>
-    </div>
-    <div>
-         <select name="sort" id="sort">
-            <option selected value="sort">Sort By</option>
-            <option value="priceLowToHigh">Price - low to high</option>
-            <option value="priceHighToLow">Price - high to low</option>
-            <option value="ratingHighToLow">Rating - high to low</option>
-         </select>
     </div> -->
-</div>
+<!-- </div> -->

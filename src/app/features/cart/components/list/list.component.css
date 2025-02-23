@@ -1,0 +1,18 @@
+
+#p-message-div{
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+}
+#p-message-inner-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#p-message-container{
+    height: 10%;
+}
+.confirmOrderDiv{
+    display: flex;
+    justify-content: center;
+}

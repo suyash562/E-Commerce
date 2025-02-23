@@ -1,3 +1,9 @@
+@import "primeicons/primeicons.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
 *{
     padding: 0px;
     margin: 0px;
@@ -24,16 +30,18 @@
     flex-direction: row;
     width: 60%;
     justify-content: space-evenly;
+    align-items: center;
 }
 
-div > a{
+div > a, div > button{
     padding: 8px;
-    border: 0px;
+    border: 1px solid rgba(255, 68, 0, 0.795);
     border-radius: 3px;
     color: white;
     text-decoration: none;
     background-color: rgba(255, 68, 0, 0.795);
 }
+
 #categoryFilter, #ratingFilter, #sort{
     padding: 8px;
     border: 0px;
@@ -42,7 +50,7 @@ div > a{
     text-decoration: none;
     background-color: rgba(255, 68, 0, 0.795);
 }
-div > a:hover{
+div > a:hover, div > button:hover{
     color: rgba(255, 68, 0, 0.795);
     background-color: white;
     border: 1px solid rgba(255, 68, 0, 0.795);
@@ -110,3 +118,5 @@ footer {
     bottom: 0;  
     width: 100%;  
 }  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

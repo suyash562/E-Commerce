@@ -1,29 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <form [formGroup]="loginForm" method="post">
+    <!-- <div class="container"> -->
+        <!-- <h2>Login</h2>
+        <form [formGroup]="loginForm">
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" formControlName="email" required>
+                <input pInputText formControlName="email" style="width: 50%;"  [ngClass]="getNgClass('email')" placeholder="Name" />
             </div>
-            <h5 class="error" id="emailError"></h5>
+            <h5 [ngClass]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'error' : 'hideView'" id="emailError">Invalid Email</h5>
             <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" formControlName="password" required>
+                <p-password id="password" [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'ng-invalid ng-dirty' : ''" [feedback]="false" formControlName="password" [toggleMask]="true" />
             </div>
             <div id="button-div">
                 <button type="submit" (click)="login()">Login</button>
             </div>
-        </form>
-        <!-- <a id="indexAnchorTag" href="index.html"></a> -->
-    </div>
+        </form> -->
+        <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+            <ng-template #header>
+                <img style="max-height: 320px;" alt="Card" class="w-full" src="login1.avif" />
+            </ng-template>
+            <ng-template #title> Login </ng-template>
+            <hr style="height: 2px; background-color: grey;">
+            <form [formGroup]="loginForm">
+                <div id="emailInputId" style="display: flex; justify-content: center;">
+                    <div>
+                        <input pInputText formControlName="email" style="width: 250px"  [ngClass]="getNgClass('email')" placeholder="E-mail" />
+                        <small [ngClass]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'error' : 'hideView'" id="emailError" id="username-help">Please enter a valid E-mail</small>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <p-password id="password" [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'ng-invalid ng-dirty' : ''" [feedback]="false" placeholder="Password" formControlName="password" [toggleMask]="true" />
+                        <small [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'error' : 'hideView'" id="emailError" id="username-help">Password must be at least 6 characters long</small>
+                    </div>
+                </div>
+            </form>
+            
+            <ng-template #footer>
+                <div style="display: flex; justify-content: center;">
+                    <div class="flex gap-4 mt-1"  style="width: 80%;">
+                       <p-button label="Submit" severity="contrast" class="w-full" styleClass="w-full" (click)="login()"/>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <div class="flex gap-4 mt-1" style="width: 80%;">
+                        <p-button label="Register" severity="contrast" class="w-full" [outlined]="true" styleClass="w-full" routerLink="/user/register"/>
+                    </div>
+                </div>
+            </ng-template>
+        </p-card>
+    <!-- </div> -->
 </body>
-<!-- <script src="login.js"></script> -->
-</html>

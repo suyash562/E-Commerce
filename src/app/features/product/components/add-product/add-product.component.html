@@ -1,29 +1,50 @@
+<p-toast />
 <div id="form-div">
     <div class="container">
         <h2>Add Product</h2>
-        <form method="post" [formGroup]="productFormGroup" (submit)="submitForm()">
+        <form [formGroup]="productFormGroup" (submit)="submitForm()">
             <div>
-                <label>Category :</label>
-                <input type="text" formControlName="category" required>
+                <label for="category">Category :</label>
+                <!-- <input type="text" id="category" formControlName="category" required> -->
+                <div style="width: 60%;">
+                    <input pInputText formControlName="category" id="category" style="width: 100%"  [ngClass]="getNgClass('category')" placeholder="Category" />
+                    <small [ngClass]="productFormGroup.get('category')?.touched && productFormGroup.get('category')?.invalid ? 'error' : 'hideView'" id="categoryError" id="username-help">* Required</small>
+                </div>
             </div>
             <div>
                 <label for="name">Name : </label>
-                <input type="text" id="name" name="name" formControlName="name" required>
+                <!-- <input type="text" id="name" name="name" formControlName="name" required> -->
+                <div style="width: 60%;">
+                    <input pInputText formControlName="name" id="name" style="width: 100%"  [ngClass]="getNgClass('name')" placeholder="Product Name" />
+                    <small [ngClass]="productFormGroup.get('name')?.touched && productFormGroup.get('name')?.invalid ? 'error' : 'hideView'">* Required</small>
+                </div>
             </div>
             <div>
                 <label for="price">Price : </label>
-                <input type="number" id="price" name="price" formControlName="price" required>
+                <!-- <input type="number" id="price" name="price" formControlName="price" required> -->
+                <div style="width: 60%;">
+                    <input pInputText formControlName="price" id="price" type="number" style="width: 100%"  [ngClass]="getNgClass('price')" placeholder="Price" />
+                    <small [ngClass]="productFormGroup.get('price')?.touched && productFormGroup.get('price')?.invalid ? 'error' : 'hideView'">* Required</small>
+                </div>
             </div>
             <div>
                 <label for="rating">Rating : </label>
-                <input type="number" id="rating" name="rating" formControlName="rating" required>
+                <!-- <input type="number" id="rating" name="rating" formControlName="rating" required> -->
+                <div style="width: 60%;">
+                    <input pInputText formControlName="rating" id="rating" type="number" style="width: 100%"  [ngClass]="getNgClass('rating')" placeholder="Rating" />
+                    <small [ngClass]="productFormGroup.get('rating')?.touched && productFormGroup.get('rating')?.invalid ? 'error' : 'hideView'">* Required</small>
+                </div>
             </div>
             <div>
-                <label for="url">Image url : </label>
-                <input type="url" id="url" name="url" formControlName="url" required>
+                <label for="url">Image : </label>
+                <!-- <input type="url" id="url" name="url" formControlName="url" required> -->
+                <div style="width: 60%;">
+                    <input pInputText formControlName="url" id="url" style="width: 100%"  [ngClass]="getNgClass('url')" placeholder="Image URL" />
+                    <small [ngClass]="productFormGroup.get('url')?.touched && productFormGroup.get('url')?.invalid ? 'error' : 'hideView'">* Required</small>
+                </div>
             </div>
             <div id="button-div">
-                <button type="submit">Add</button>
+                <p-button [disabled]="productFormGroup.invalid" severity="contrast" type="submit">Add</p-button>
             </div>
         </form>
         <!-- <a id="addProductAnchor" href="login.html"></a> -->

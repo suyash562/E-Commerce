@@ -29,15 +29,37 @@ div > input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-form button {
-    width: 30%;
-    padding: 10px;
-    background-color: rgba(255, 68, 0, 0.795);
+h2{
+    font-size: 1.4rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+:host >>> .p-button{
+    width: 150px;
+    margin-top: 1rem;
+    /* padding: 10px; */
+    /* background-color: rgba(255, 68, 0, 0.795);
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: pointer; */
 }
 form button:hover {
     background-color: rgba(255, 68, 0, 0.945);
+}
+
+.p-inputtext{
+    width: 100%;
+}
+.hideView{
+    display: none;
+}
+.error{
+    display: block;
+    color: red;
+}
+.inputInvalid{
+    border: 2px solid red;
+}
+.validInput{
+    border: 1px solid #ccc;
 }

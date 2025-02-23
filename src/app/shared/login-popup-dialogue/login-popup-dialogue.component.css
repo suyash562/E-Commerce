@@ -1,0 +1,15 @@
+.dark\:bg-surface-900{
+    background-color: white;
+} 
+.dark\:border-surface-700{
+    border-color: rgb(194, 194, 194);
+}
+.bg-surface-50{
+    background-color: white;
+}
+.grid-cols-12{
+    grid-template-columns: repeat(18,minmax(0,1fr));
+}
+.bg-primary {
+    background-color: #020617;
+}

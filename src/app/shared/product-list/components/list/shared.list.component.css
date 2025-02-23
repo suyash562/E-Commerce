@@ -1,0 +1,45 @@
+/* #quantity-button-div{
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+}
+#quantity-button-div > button{
+    padding:2px 8px 2px 8px;
+    border: 1px solid black;
+    color: black;
+    background-color: white;
+    border-radius: 3px;
+} */
+
+#items-grid{
+    padding-top: 4rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    padding-bottom: 3rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+.dark\:bg-surface-900{
+    background-color: white;
+} 
+.dark\:border-surface-700{
+    border-color: rgb(194, 194, 194);
+}
+.bg-surface-50{
+    background-color: white;
+}
+.grid-cols-12{
+    grid-template-columns: repeat(18,minmax(0,1fr));
+}
+#p-button-override{
+    padding: '3px'
+}
+#quantity-div{
+    display: flex;
+    align-items: center;
+}
+#quantity{
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+}

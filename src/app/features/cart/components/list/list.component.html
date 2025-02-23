@@ -1,5 +1,24 @@
+<p-toast />
 <app-header id="base-container"></app-header>
 
-<app-shared-list [productsArray]="user.userCart" [buttonTitle]="'Remove from Cart'" (buttonClickedEvent)="removeFromCart($event)"></app-shared-list>
-<h4>Total Amount = {{user.bill}}</h4>
-<button (click)="confirmOrder()">Confirm Order</button>
+<div id="p-message-div" *ngIf="user.userCart.length === 0; else sharedListTemplate">
+    <div id="p-message-inner-div">
+        <div id="p-message-container">
+            <p-message id="empty-cart-message" severity="info"  styleClass="h-full">Your cart is Empty</p-message>
+        </div>
+    </div>
+</div>
+<ng-template #sharedListTemplate>
+    <app-shared-list [productsArray]="user.userCart" [buttonTitle]="'Remove from Cart'" (buttonClickedEvent)="removeFromCart($event)" (changeQuantityEvent)="changeQuantity($event)"></app-shared-list>
+</ng-template>
+
+<ng-container *ngIf="user.userCart.length !== 0">
+    <div class="confirmOrderDiv">
+        <div>
+            <span>Total Amount = </span><strong>{{user.bill | currency : 'INR'}}</strong>
+            <div style="margin-bottom: 3rem; margin-top: 1rem;">
+                <p-button id="button" label="Confirm Order" variant="outlined" severity="warn" (click)="confirmOrder()"></p-button> 
+            </div>
+        </div>
+    </div>
+</ng-container>

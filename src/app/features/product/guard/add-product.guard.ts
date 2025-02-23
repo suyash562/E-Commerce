@@ -11,7 +11,9 @@ export class AddProductGuard implements CanActivate{
     if(user && user.role === 'admin'){
       return true;
     }
-    return this.router.createUrlTree(['/common/un-authorized']);
+    // return this.router.createUrlTree(['/common/un-authorized']);    
+    
+    return this.router.navigate(['/'], {queryParams : {redirected : true}});
   }
 
 }

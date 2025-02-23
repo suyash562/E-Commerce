@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
-import { Product } from '../../product/model/product';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +18,8 @@ export class UserService {
   // addUser(user: any){
   //   this.users.push(user);
   // }
-  getCurrentUser(){
-    return JSON.parse(localStorage.getItem('currentUser')!).email;
+  getCurrentUserEmail(){
+    return JSON.parse(localStorage.getItem('currentUser')!)?.email;
   }
   login(user : Partial<User>){
     localStorage.setItem('currentUser' , JSON.stringify({email : user.email!, role : user.email === 'admin@gmail.com' ? 'admin' : 'user'}));
@@ -37,7 +36,6 @@ export class UserService {
     return this.users.find((user) => user.email == email);
   }
   setUser(email : string, updatedUser : User){
-    console.log(this.users.length);
     for (let i = 0; i < this.users.length; i++) {
       if(this.users[i].email === email){
         this.users[i] = updatedUser;
@@ -49,8 +47,8 @@ export class UserService {
   }
   logout(){
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('users');
-    localStorage.setItem('users', JSON.stringify([] as User[]));
+    // localStorage.removeItem('users');
+    // localStorage.setItem('users', JSON.stringify([] as User[]));
     // this.users = [];
   }
 }

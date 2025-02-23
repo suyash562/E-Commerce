@@ -7,13 +7,15 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import {  ReactiveFormsModule } from '@angular/forms';
 import { ProductListModule } from '../../shared/product-list/product-list.module';
 import { AddProductGuard } from './guard/add-product.guard';
-
-
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
     ListComponent,
-    AddProductComponent
+    AddProductComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,11 @@ import { AddProductGuard } from './guard/add-product.guard';
       {path: 'add-product', canActivate: [AddProductGuard] ,component: AddProductComponent},
     ]),
     HeaderModule,
-    ProductListModule
-  ]
+    ProductListModule,
+    ToastModule,
+    DialogModule,
+    ButtonModule,
+    InputTextModule
+  ],
 })
 export class ProductModule { }
