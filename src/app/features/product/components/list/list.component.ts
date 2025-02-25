@@ -51,9 +51,4 @@ export class ListComponent implements OnInit{
     console.log('drawer enabled');
     
   }
-  disableDrawer(){
-    this.isDrawerVisible[0] = false;
-    console.log('drawer diabled');
-    
-  }
 }

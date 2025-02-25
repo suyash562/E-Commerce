@@ -9,10 +9,14 @@ import { TagModule } from 'primeng/tag';
 import { ConfirmationService } from 'primeng/api';
 import { LoginPopupDialogueModule } from '../login-popup-dialogue/login-popup-dialogue.module';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { OptionsComponent } from './components/options/options.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectModule } from 'primeng/select';
 
 @NgModule({
   declarations: [
     SharedListComponent,
+    OptionsComponent,
   ],
   imports: [
     CommonModule,
@@ -22,13 +26,16 @@ import { TreeSelectModule } from 'primeng/treeselect';
     FormsModule,
     TagModule,
     LoginPopupDialogueModule,
-    TreeSelectModule
+    TreeSelectModule,
+    RadioButtonModule,
+    SelectModule
   ],
   providers:[
     ConfirmationService
   ],
   exports: [
-    SharedListComponent
+    SharedListComponent,
+    OptionsComponent
   ]
 })
 export class ProductListModule { }

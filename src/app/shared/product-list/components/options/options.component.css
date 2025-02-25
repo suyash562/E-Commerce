@@ -1,0 +1,8 @@
+.options-div{
+    display: flex;
+    align-items: center;
+    margin-top: 2%;
+    padding-left: 10%;
+    padding-right: 50%;
+    justify-content: space-around;
+}

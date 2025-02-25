@@ -1,4 +1,5 @@
 
+<app-options *ngIf="buttonTitle !== 'Remove from Cart'" (sortEvent)="sortProducts($event)"></app-options>
 <div id="items-grid">
     <!-- @for(product of productsToDisplay; track product.id){
         <div class="item">

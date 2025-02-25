@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MenuModule } from 'primeng/menu';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
+import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService } from 'primeng/api';
 import { DrawerModule } from 'primeng/drawer';
 import { DrawerComponent } from './components/drawer/drawer.component';
+import { Ripple } from 'primeng/ripple';
+import { StyleClass } from 'primeng/styleclass';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     AvatarModule,
     ButtonModule,
     DrawerModule,
+    Ripple,
+    StyleClass,
     RouterModule.forChild([
       // {path: 'add-product', component: AddProductComponent},
     ])

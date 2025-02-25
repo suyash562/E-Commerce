@@ -1,0 +1,16 @@
+<div class="options-div">
+    <p class="text-surface-900 dark:text-surface-800">Sort By : </p>
+    <div class="flex flex-wrap gap-4">
+        <div class="flex items-center">
+            <p-radiobutton name="price" value="price" [(ngModel)]="criteria" inputId="price" (onClick)="sortOptionSelected()"/>
+            <label for="price" class="ml-2 text-surface-900 dark:text-surface-800">Price</label>
+        </div>
+        <div class="flex items-center">
+            <p-radiobutton name="rating" value="rating" [(ngModel)]="criteria" (onClick)="sortOptionSelected()"/>
+            <label for="ingredient2" class="ml-2 text-surface-900 dark:text-surface-800">Rating</label>
+        </div>
+    </div>
+    <div>
+        <p-select class="w-full md:w-48" [options]="sortOrder" [(ngModel)]="selectedSortingOption" optionLabel="name" placeholder="Order" (onChange)="sortOptionSelected()" />
+    </div>
+</div>

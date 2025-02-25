@@ -54,6 +54,24 @@ export class SharedListComponent implements OnInit, OnDestroy{
       increment : (incrementOrDecrement === 'increment' ? true : false),
     });
   }
+  sortProducts(options : any){
+    if(options.criteria === 'price'){
+      if(options.order === 'LH'){
+        this.productsToDisplay.sort((p1 , p2) => {return p1.price - p2.price})
+      }
+      else{
+        this.productsToDisplay.sort((p1 , p2) => {return p2.price - p1.price})
+      }
+    }
+    else{
+      if(options.order === 'LH'){
+        this.productsToDisplay.sort((p1 , p2) => {return p1.rating - p2.rating})
+      }
+      else{
+        this.productsToDisplay.sort((p1 , p2) => {return p2.rating - p1.rating})
+      }
+    }
+  }
   ngOnDestroy(): void {
     this.selectedProductSubscription?.unsubscribe();
   }
