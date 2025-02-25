@@ -60,12 +60,17 @@ export class HeaderComponent implements OnInit{
     ];
     this.dropDownOptions = [
       {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command : ()=>{
-          this.logout();
-        }
-      }
+        label: 'Orders',
+        icon: 'pi pi-shopping-cart',
+      },
+      {
+        label: 'Wishlist',
+        icon: 'pi pi-heart',
+      },
+      {
+        label: 'Edit Profile',
+        icon: 'pi pi-user-edit',
+      },
     ]
     // if(this.currentUserEmail === 'admin@gmail.com'){
     //   this.items.push({
@@ -87,8 +92,8 @@ export class HeaderComponent implements OnInit{
   displayDrawer(){
     this.displayDrawerEmitter.emit(true);
   }
-  logout(){
-    this.userService.logout();
-    this.router.navigateByUrl('/user/login');
-  }
+  // logout(){
+  //   this.userService.logout();
+  //   this.router.navigateByUrl('/user/login');
+  // }
 }

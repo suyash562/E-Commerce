@@ -72,6 +72,9 @@ export class SharedListComponent implements OnInit, OnDestroy{
       }
     }
   }
+  filterProducts(category : any){
+    this.productsToDisplay = this.productsArray.filter(product => product.category.toLowerCase() === category.trim().toLowerCase())
+  }
   ngOnDestroy(): void {
     this.selectedProductSubscription?.unsubscribe();
   }

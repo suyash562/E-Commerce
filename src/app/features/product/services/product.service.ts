@@ -8,6 +8,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class ProductService {
   private _productsArray  : Product[]= [];
+  private _categories : string[] = [];
   private _selectedProductNameSubject : BehaviorSubject<string> = new BehaviorSubject("");
 
   constructor(private userService : UserService){
@@ -15,6 +16,9 @@ export class ProductService {
     this._productsArray.push({id:2, name:'Logitech Keyboard',category: 'Appliances',price:20000, rating : 6, url : 'keyboard.jpg'});
     this._productsArray.push({id:3, name:'Mouse',category: 'Appliances',price:2000, rating : 4, url : 'mouse.jpg'});
     this._productsArray.push({id:4, name:'Samsung S23 FE',category: 'Mobile',price:40000, rating : 8, url : 'samsung.jpg'});
+    this._categories.push('Laptop');
+    this._categories.push('Appliances');
+    this._categories.push('Mobile');
   }
 
   get productArray() : Product[] {
@@ -22,6 +26,9 @@ export class ProductService {
   }
   get selectedProductNameSubject(){
     return this._selectedProductNameSubject;
+  }
+  get categories(){
+    return this._categories;
   }
   addProduct(product : Product){
     this._productsArray.push({...product, ...{id : this._productsArray.length+1}});

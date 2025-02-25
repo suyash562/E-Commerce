@@ -1,8 +1,31 @@
 .options-div{
     display: flex;
+    justify-content: space-evenly;
+    padding-left: 8%;
+    padding-right: 10%;
+}
+.sort-div{
+    display: flex;
     align-items: center;
+    /* width: 55%; */
     margin-top: 2%;
-    padding-left: 10%;
-    padding-right: 50%;
     justify-content: space-around;
+}
+.filter-div{
+    display: flex;
+    align-items: center;
+    /* width: 45%; */
+    margin-top: 2%;
+    justify-content: space-around;
+}
+.sort-div > div{
+    padding-left: 10px;
+}
+.filter-div > p{
+    padding-right: 10px;
+}
+.clear-filter-div{
+    margin-top: 2%;
+    align-items: center;
+    display: flex;
 }
