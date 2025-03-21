@@ -26,13 +26,13 @@
                 <div id="emailInputId" style="display: flex; justify-content: center;">
                     <div>
                         <input pInputText formControlName="email" style="width: 250px"  [ngClass]="getNgClass('email')" placeholder="E-mail" />
-                        <small [ngClass]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'error' : 'hideView'" id="emailError" id="username-help">Please enter a valid E-mail</small>
+                        <small [ngClass]="getErrorClass('email')" id="emailError" id="username-help">Please enter a valid E-mail</small>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <div>
                         <p-password id="password" [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'ng-invalid ng-dirty' : ''" [feedback]="false" placeholder="Password" formControlName="password" [toggleMask]="true" />
-                        <small [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'error' : 'hideView'" id="emailError" id="username-help">Password must be at least 6 characters long</small>
+                        <small [ngClass]="getErrorClass('password')" id="emailError" id="username-help">Password must be at least 6 characters long</small>
                     </div>
                 </div>
             </form>

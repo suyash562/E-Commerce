@@ -161,7 +161,7 @@
                         </li>
                     </ul>
                 </div>
-                <div *ngIf="currentUserEmail" class="mt-auto">
+                <div *ngIf="loggedIn" class="mt-auto">
                     <hr class="mb-4 mx-4 border-t border-0 border-surface" />
                     <a pRipple class="m-4 flex items-center cursor-pointer p-4 gap-2 rounded-border text-surface-700 dark:text-surface-700 hover:bg-surface-100 dark:hover:bg-surface-200 duration-150 transition-colors p-ripple" (click)="logout()">
                         <i class="pi pi-sign-out"></i>

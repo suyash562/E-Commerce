@@ -17,9 +17,9 @@
     </div>
     <div class="filter-div">
         <p class="text-surface-900 dark:text-surface-800">Filter By Category : </p>
-        <p-select class="w-full md:w-48" [options]="filterCategory" [(ngModel)]="selectedFilteringOption" optionLabel="name" placeholder="Category" (onChange)="filterOptionSelected()" />
+        <p-select #selectFilter class="w-full md:w-48" [options]="filterCategory" [(ngModel)]="selectedFilteringOption" optionLabel="name" placeholder="Category" (onChange)="filterOptionSelected()" />
     </div>
     <div class="clear-filter-div">
-        <p-button label="Clear Filters" severity="contrast"></p-button>
+        <p-button label="Clear Filter" severity="contrast" variant="outlined" (click)="clearFilter(); selectFilter.clear()"></p-button>
     </div>
 </div>

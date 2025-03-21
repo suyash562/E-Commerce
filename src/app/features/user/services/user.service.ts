@@ -1,55 +1,37 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  // user : User | undefined;
 
-  users : User[] = [];
-  constructor() {
-    console.log('user service instance');
-    if(!localStorage.getItem('users')){
-      localStorage.setItem('users', JSON.stringify([] as User[]));
-    }
-    this.users = JSON.parse(localStorage.getItem('users')!) ?? [];
-  }
+  constructor(private http : HttpClient) {}
   
   // addUser(user: any){
   //   this.users.push(user);
   // }
-  getCurrentUserEmail(){
-    return JSON.parse(localStorage.getItem('currentUser')!)?.email;
+  // getCurrentUserEmail(){
+  //   return JSON.parse(localStorage.getItem('currentUser')!)?.email;
+  // }
+  login(user : Partial<User>){            
+    return this.http.post<User>("http://localhost:3200/user/login", {'email' : user.email, 'password' : user.password});
   }
-  login(user : Partial<User>){
-    localStorage.setItem('currentUser' , JSON.stringify({email : user.email!, role : user.email === 'admin@gmail.com' ? 'admin' : 'user'}));
-    this.users = JSON.parse(localStorage.getItem('users')!);
-    this.users.push({...user, name : 'abc', contact: '9876543021', bill : 0 , userCart : []} as User);
-    
-    localStorage.setItem('users' , JSON.stringify(this.users));
   
-    return true;
-  }
-  getUser(email : string){
-    // this.users = JSON.parse(localStorage.getItem('users')!);
-    // let userCart = this.users.find((user) => user.email == email)?.userCart;
-    return this.users.find((user) => user.email == email);
-  }
-  setUser(email : string, updatedUser : User){
-    for (let i = 0; i < this.users.length; i++) {
-      if(this.users[i].email === email){
-        this.users[i] = updatedUser;
-        localStorage.setItem('users' , JSON.stringify(this.users));
-        // return true;
-      }
-    }
-    // return false;
-  }
   logout(){
-    localStorage.removeItem('currentUser');
-    // localStorage.removeItem('users');
-    // localStorage.setItem('users', JSON.stringify([] as User[]));
-    // this.users = [];
+    // this.user = undefined;
+    localStorage.removeItem('USER-TOKEN');
+  }
+  isLoggedIn(){
+    if(localStorage.getItem('USER-TOKEN')){
+      return true;
+    }
+    return false;
+  }
+  getUserToken(){
+    return localStorage.getItem('USER-TOKEN');
   }
 }
 

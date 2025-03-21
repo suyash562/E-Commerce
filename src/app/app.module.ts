@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './shared/auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MessageService } from 'primeng/api';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync(),
@@ -27,7 +29,8 @@ import { MessageService } from 'primeng/api';
             },
 
         }),
-        MessageService
+        MessageService,
+        [{provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true}]
   ],
   bootstrap: [AppComponent]
 })

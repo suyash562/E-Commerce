@@ -1,5 +1,5 @@
 
-<app-options *ngIf="buttonTitle !== 'Remove from Cart'" (sortEvent)="sortProducts($event)" (filterEvent)="filterProducts($event)"></app-options>
+<app-options *ngIf="buttonTitle !== 'Remove from Cart'" (sortEvent)="sortProducts($event)" (filterEvent)="filterProducts($event)" (clearFilterEvent)="clearFilter()"></app-options>
 <div id="items-grid">
     <!-- @for(product of productsToDisplay; track product.id){
         <div class="item">
@@ -54,7 +54,7 @@
                             <div class="relative mx-auto">
                                 <img
                                     class="rounded w-full"
-                                    [src]="product.url"
+                                    [src]="product.imageUrl"
                                     [alt]="product.name"
                                     style="max-width: 300px; max-height: 130px"
                                 />
@@ -87,10 +87,18 @@
                                 </div>
                             </div>
                             <div class="flex flex-col gap-6 mt-6">
-                                <div id="quantity-div" *ngIf="buttonTitle === 'Remove from Cart'">
-                                    <p-button id="p-button-override" icon="pi pi-minus" variant="outlined" severity="warn" (click)="changeQuantity(product.id,'decrement')"></p-button>
-                                    <p id="quantity">{{product.quantity}}</p>
-                                    <p-button id="p-button-override" icon="pi pi-plus" variant="outlined" severity="warn" (click)="changeQuantity(product.id,'increment')"></p-button>
+                                <div id="quantity-div" *ngIf="buttonTitle === 'Remove from Cart' && product.id">
+                                    <ng-container *ngIf="editProductId === product.id; else displayQuantityTemplate">
+                                        <p-button id="p-button-override" icon="pi pi-minus" variant="outlined" severity="warn" (click)="product.quantity = product.quantity > 1 ? product.quantity - 1 : product.quantity"></p-button>
+                                        <p id="quantity">{{product.quantity}}</p>
+                                        <p-button id="p-button-override" icon="pi pi-plus" variant="outlined" severity="warn" (click)="product.quantity = product.quantity + 1"></p-button>
+                                        <p-button id="p-button-override" variant="outlined" severity="warn" label="Confirm" (click)="changeQuantity(product.id, product.quantity)"></p-button>
+                                    </ng-container>
+                                    <ng-template #displayQuantityTemplate>
+                                        <p>Units : </p>
+                                        <p id="quantity">{{product.quantity}}</p>
+                                        <p-button id="p-button-override" icon="pi pi-pencil" variant="outlined" label="Edit" severity="warn" (click)="editProductId = product.id"></p-button>
+                                    </ng-template>
                                 </div>
                                 <span class="text-2xl font-semibold">{{ product.price | currency: 'INR' }}</span>
                                 <div class="flex gap-2">
@@ -99,7 +107,7 @@
                                         icon="{{buttonTitle === 'Remove from Cart' ? '' : 'pi pi-shopping-cart'}}"
                                         severity="contrast"
                                         label="{{buttonTitle}}"
-                                        (click)="addToCart(product.id)"
+                                        (click)="addOrRemoveFromCart(product.id)"
                                         [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
                                         class="flex-auto whitespace-nowrap"
                                     ></button>

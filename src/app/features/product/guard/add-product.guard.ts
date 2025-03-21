@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddProductGuard implements CanActivate{
-  constructor(private router : Router){}
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    let user = JSON.parse(localStorage.getItem('currentUser')!) ?? null;
-    if(user && user.role === 'admin'){
+  constructor(private router : Router, private userService : UserService){}
+  
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {    
+    if(this.userService.isLoggedIn()){
       return true;
-    }
-    // return this.router.createUrlTree(['/common/un-authorized']);    
-    
+    }    
     return this.router.navigate(['/'], {queryParams : {redirected : true}});
   }
-
 }

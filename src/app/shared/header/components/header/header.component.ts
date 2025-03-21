@@ -5,6 +5,7 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { FormControl } from '@angular/forms';
 import { ProductService } from '../../../../features/product/services/product.service';
 import { ConfirmationService, MenuItem } from 'primeng/api';
+import { User } from '../../../../features/user/model/user';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  currentUserEmail! : string;
+  // currentUser : User | undefined;
+  loggedIn : boolean = false;
   selectedProductName : FormControl = new FormControl();
   matchedProductNames : string[] = [];
   items: MenuItem[] | undefined;
@@ -24,7 +26,8 @@ export class HeaderComponent implements OnInit{
   constructor(private userService : UserService, private router : Router, private confirmationService : ConfirmationService, private productService : ProductService){}
 
   ngOnInit(): void {
-    this.currentUserEmail = this.userService.getCurrentUserEmail();
+    // this.currentUser = this.userService.isLoggedIn();
+    this.loggedIn = this.userService.isLoggedIn();
     
     this.items = [
       {
@@ -36,7 +39,7 @@ export class HeaderComponent implements OnInit{
         label: 'Cart',
         icon: 'pi pi-cart-plus',
         command: () => {
-          if(this.currentUserEmail){
+          if(this.userService.isLoggedIn()){
             this.router.navigate(['/cart/list']);
           }
           else{
@@ -55,13 +58,15 @@ export class HeaderComponent implements OnInit{
         label: 'Add Products',
         icon: 'pi pi-plus-circle',
         routerLink : '/products/add-product',
-        visible : this.currentUserEmail === 'admin@gmail.com' ? true : false,
+        // visible : this.currentUser?.email === 'admin@gmail.com' ? true : false,
+        visible : false,
       }
     ];
     this.dropDownOptions = [
       {
-        label: 'Orders',
+        label: 'My Orders',
         icon: 'pi pi-shopping-cart',
+        routerLink : '/orders/list'
       },
       {
         label: 'Wishlist',

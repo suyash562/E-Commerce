@@ -1,11 +1,12 @@
 import { Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Product } from '../../../../features/product/model/product';
+import { Product } from '../../../../features/product/entity/product';
 import { ProductService } from '../../../../features/product/services/product.service';
 // import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../features/user/services/user.service';
 import { Subscription } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
+import { CartService } from '../../../../features/cart/services/cart.service';
 
 @Component({
   selector: 'app-shared-list',
@@ -16,12 +17,13 @@ import { ConfirmationService } from 'primeng/api';
 export class SharedListComponent implements OnInit, OnDestroy{
   productsToDisplay : Product[] = [];
   selectedProductSubscription! : Subscription;
+  editProductId : number = -1;
   @Input() buttonTitle! : string;
   @Input() productsArray! : Product[];
   @Output() buttonClickedEvent = new EventEmitter<number>();
-  @Output() changeQuantityEvent = new EventEmitter<any>();
+  @Output() quantityChangeEvent = new EventEmitter<{productId : number, productQuantity : number}>();
 
-  constructor(private productService : ProductService,private userService : UserService, private confirmationService : ConfirmationService ,private router : Router){}
+  constructor(private productService : ProductService,private userService : UserService,  private cartService : CartService, private confirmationService : ConfirmationService ,private router : Router){}
   
   ngOnInit(): void {
     if(this.buttonTitle !== 'Remove from Cart'){
@@ -33,8 +35,8 @@ export class SharedListComponent implements OnInit, OnDestroy{
     }
   }
 
-  addToCart(productId : number){
-    if(this.userService.getCurrentUserEmail()){
+  addOrRemoveFromCart(productId : number){
+    if(this.userService.isLoggedIn()){
       this.buttonClickedEvent.emit(productId);
     }
     else{
@@ -48,12 +50,11 @@ export class SharedListComponent implements OnInit, OnDestroy{
       });
     }
   }
-  changeQuantity(productId : number, incrementOrDecrement : string){
-    this.changeQuantityEvent.emit({
-      productId : productId,
-      increment : (incrementOrDecrement === 'increment' ? true : false),
-    });
+
+  changeQuantity(productId : number, productQuantity : number){
+    this.quantityChangeEvent.emit({productId : productId, productQuantity : productQuantity });
   }
+
   sortProducts(options : any){
     if(options.criteria === 'price'){
       if(options.order === 'LH'){
@@ -72,10 +73,17 @@ export class SharedListComponent implements OnInit, OnDestroy{
       }
     }
   }
+
   filterProducts(category : any){
     this.productsToDisplay = this.productsArray.filter(product => product.category.toLowerCase() === category.trim().toLowerCase())
   }
+
+  clearFilter(){
+    this.productsToDisplay = this.productsArray;
+  }
+
   ngOnDestroy(): void {
     this.selectedProductSubscription?.unsubscribe();
   }
+  
 }

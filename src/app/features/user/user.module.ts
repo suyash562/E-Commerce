@@ -8,6 +8,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+// import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ButtonModule } from 'primeng/button';
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
     ]),
+    // HttpClientModule
   ],
 })
 export class UserModule { }

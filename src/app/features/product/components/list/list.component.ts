@@ -1,7 +1,6 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { Product } from '../../model/product';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../entity/product';
 import { ProductService } from '../../services/product.service';
-import { UserService } from '../../../user/services/user.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -16,9 +15,8 @@ export class ListComponent implements OnInit{
   productNamesList : string[] = [];
   isDrawerVisible : boolean[] = [false];
 
-  constructor(private productService: ProductService, private userService : UserService, private router: Router, private activatedRoute : ActivatedRoute ,private messageService : MessageService){
-    this.productsArray = this.productService.productArray;
-  }
+  constructor(private productService: ProductService, private router: Router, private activatedRoute : ActivatedRoute ,private messageService : MessageService){  }
+ 
   ngOnInit(): void {
     this.router.events.subscribe({
       next : (event) =>{
@@ -29,26 +27,35 @@ export class ListComponent implements OnInit{
         }
       }
     })
-    this.productsArray.forEach(product => {
-      this.productNamesList.push(product.name);
+    
+    this.productService.productArray
+    // .pipe(
+    //   retry(3)
+    // )
+    .subscribe({
+      next : (value) => {                        
+        this.productsArray = value;
+        this.productsArray.forEach(product => {
+          this.productNamesList.push(product.name);
+        })
+      }
     })
   }
-  addToCart(productId : number){
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
-    const product = this.productsArray.find((product) => product.id == productId);
-    
-    if(this.productService.addToCart(currentUser.email, product!)){
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product added to cart.', life: 1500 });
-      // alert('Product added to cart.')
-    }
-    else{
-      // alert('Product is already added to cart.')
-      this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Product is already added to cart.', life: 3000 });
-    }
+
+  addToCart(productId : number){    
+    this.productService.addToCart(productId).subscribe({
+      next : (value)=>{
+        if(value){
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product added to cart.', life: 1500 });
+        }
+        else{
+          this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Product is already added to cart.', life: 3000 });
+        }
+      }
+    })
   }
+  
   displayDrawer(event : any){       
     this.isDrawerVisible[0] = event;        
-    console.log('drawer enabled');
-    
   }
 }

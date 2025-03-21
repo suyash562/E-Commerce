@@ -1,69 +1,27 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../../user/services/user.service';
-import { User } from '../../user/model/user';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Product } from '../../product/entity/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private userService : UserService) { }
+  constructor(private http : HttpClient) {}
   
-  confirmOrder(email : string){
-    try{
-      const user : User = this.userService.getUser(email)!;
-      user.bill = 0;
-      user.userCart = [];
-      this.userService.setUser(email, user);
-      return true;
-    }catch(error){
-      return false;
-    }
+  getUserCartAndBill(){
+    return this.http.get<{userCart : Product[], totalBill : number}>('http://localhost:3200/cart');
   }
-  changeQuantity(email : string, productId : number, quantity : number){
-    let user = this.userService.getUser(email);
-    if(!user){
-      return false;
-    }
-    let productIndex : number = user.userCart.findIndex((product) => product.id == productId);
-    if(productIndex !== -1){
-      if(quantity === -1 && user.userCart[productIndex].quantity === 1){
-        return this.removeFromCart(email, productId);
-      }
-      user.userCart[productIndex].quantity += quantity;
-      user.bill += user.userCart[productIndex].price * quantity;
-      this.userService.setUser(email,user);
-      return true
-    }
-    return false;
+  
+  confirmOrder(){
+    return this.http.get('http://localhost:3200/user/confirmOrder');
   }
-  removeFromCart(email : string, productId : number){
-    // let userCart : Product[] = [];
-    // let users : User[]= JSON.parse(localStorage.getItem('users')!) ?? [];
-    let user = this.userService.getUser(email);
-    if(!user){
-      return false;
-    }
-    // users.forEach((user) =>{
-    //   if(user.email == email){
-    //     userCart = user.userCart;
-    //   }
-    // })
-    
-    let productIndex : number= user.userCart.findIndex((product) => product.id == productId);
-    if(productIndex != -1){
-      user.bill -= user.userCart[productIndex].price * user.userCart[productIndex].quantity;
-      user.userCart.splice(productIndex,1).length
-      this.userService.setUser(email,user);
-      
-      // for (let i = 0; i < users.length; i++) {
-      //   if(users[i].email === email){
-      //     users[i].userCart = userCart;
-      //   }
-      // }
-      // localStorage.setItem('users' , JSON.stringify(users));
-      return true;
-    }
-    return false;
+
+  changeQuantity(productId : number, quantityNumber : number){
+    return this.http.post<{totalBill : number}>('http://localhost:3200/update-product-quantity',{productId : productId, quantityNumber : quantityNumber});
+  }
+
+  removeFromCart(productId : number){
+    return this.http.delete<{totalBill : number}>(`http://localhost:3200/cart/${productId}`,);
   }
 }

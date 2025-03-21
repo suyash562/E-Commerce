@@ -36,12 +36,6 @@ h2{
 :host >>> .p-button{
     width: 150px;
     margin-top: 1rem;
-    /* padding: 10px; */
-    /* background-color: rgba(255, 68, 0, 0.795);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer; */
 }
 form button:hover {
     background-color: rgba(255, 68, 0, 0.945);

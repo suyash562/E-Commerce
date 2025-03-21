@@ -16,6 +16,7 @@ export class OptionsComponent implements OnInit{
   filterCategory : { name: string}[] = []
   @Output() sortEvent : EventEmitter<{criteria : string, order : string}> = new EventEmitter();
   @Output() filterEvent : EventEmitter<string> = new EventEmitter();
+  @Output() clearFilterEvent : EventEmitter<void> = new EventEmitter();
 
   constructor(private productService : ProductService){}
 
@@ -36,6 +37,13 @@ export class OptionsComponent implements OnInit{
     }
   }
   filterOptionSelected(){    
-    this.filterEvent.emit(this.selectedFilteringOption.name);
+    if(this.selectedFilteringOption){
+      this.filterEvent.emit(this.selectedFilteringOption.name);
+    }
+  }
+  clearFilter(){
+    if(this.selectedFilteringOption){
+      this.clearFilterEvent.emit();
+    }
   }
 }

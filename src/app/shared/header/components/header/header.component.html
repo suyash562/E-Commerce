@@ -8,7 +8,7 @@
     <ng-template #end>
         <div class="flex items-center gap-2">
             <p-autocomplete placeholder="search" [suggestions]="matchedProductNames" [formControl]="selectedProductName" (completeMethod)="getOptions($event)" />
-            <ng-container *ngIf="currentUserEmail;else loginTemplate">
+            <ng-container *ngIf="loggedIn ;else loginTemplate">
                 <p-menu #menu [model]="dropDownOptions" [popup]="true" />
                 <p-button severity="secondary" (click)="menu.toggle($event)" icon="pi pi-user"/>
                 <!-- <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" /> -->

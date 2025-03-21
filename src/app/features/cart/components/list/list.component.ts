@@ -1,9 +1,8 @@
-import { Component, DoCheck } from '@angular/core';
-import { UserService } from '../../../user/services/user.service';
-import { ProductService } from '../../../product/services/product.service';
-import { User } from '../../../user/model/user';
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { MessageService } from 'primeng/api';
+import { Product } from '../../../product/entity/product';
+import { SharedListComponent } from '../../../../shared/product-list/components/list/shared.list.component';
 
 @Component({
   selector: 'app-list',
@@ -12,32 +11,64 @@ import { MessageService } from 'primeng/api';
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
-export class ListComponent{
-  user : User;
-  // userCart : Product[] = [];
+export class ListComponent implements OnInit{
+  userCart : Product[] = [];
+  totalBill : number = 0;
+  @ViewChild('sharedList') childSharedList! : SharedListComponent;
 
-  constructor(private userService : UserService, private cartService : CartService, private messageService : MessageService){
-    // this.user = this.userService.getUser(userService.getCurrentUser())?.userCart ?? [];
-    this.user = this.userService.getUser(userService.getCurrentUserEmail())!;    
+  constructor(private cartService : CartService, private messageService : MessageService){  }
+ 
+  ngOnInit(): void {
+    this.cartService.getUserCartAndBill().subscribe({
+      next : (value) => {
+        this.userCart = value.userCart;
+        this.totalBill = value.totalBill;
+      }
+    })
   }
-  
+  changeQuantity(changeDetails : {productId : number, productQuantity : number}){
+    this.cartService.changeQuantity(changeDetails.productId, changeDetails.productQuantity).subscribe({
+      next : (value) => {
+        if(value){
+          this.childSharedList.editProductId = -1;
+          this.totalBill = value.totalBill;
+        }
+        else{
+          alert('Failed')
+        }
+      }
+    })
+  }
   removeFromCart(productId : number){   
-    if(!this.cartService.removeFromCart(this.userService.getCurrentUserEmail(), productId)){
-      alert('Failed to remove product from cart.')
-    }
-  }
-  
-  changeQuantity(changeDetails : {productId : number, increment : boolean}){
-    this.cartService.changeQuantity(this.user.email, changeDetails.productId , changeDetails.increment ? 1 : -1);
+    this.cartService.removeFromCart(productId).subscribe({
+      next : (value) => {
+        if(value){
+          for(let i = 0; i<this.userCart.length; i++){
+            if(this.userCart[i].id === productId){
+              this.userCart.splice(i,1);
+              this.totalBill = value.totalBill;
+              break;
+            }
+          }
+        }
+        else{
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to remove Product from Cart.', life : 3000});
+        }
+      }
+    })
   }
 
   confirmOrder(){
-    if(this.cartService.confirmOrder(this.user.email)){
-      // alert('Your order has been confirmed.')
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your order has been confirmed.', sticky: true });
-    }
-    else{
-      alert('Failed to confirm order.')
-    }
+    this.cartService.confirmOrder().subscribe({
+      next : (value) => {
+        if(value){
+          this.userCart = [];
+          this.totalBill = 0;
+        }
+        else{
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to confirm your Order.', life : 3000});
+        }
+      }
+    })
   }
 }
